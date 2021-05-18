@@ -1,3 +1,4 @@
+// main 페이지의 오늘 참여자 수, 총 챌린지 개수, 오늘 챌린지 개수 현황을 반환
 export const getMain = async (req, res, next) => {
   try {
     // db query
@@ -22,11 +23,12 @@ export const getMain = async (req, res, next) => {
         todayPostNum,
         sumUserNum
     });
-} catch(error) {
+  } catch(error) {
     next(error);
-}
+  }
 };
 
+// post 목록 반환
 export const getPosts = async (req, res, next) => {
   try {
     const {query : {category, sort}} = req;
@@ -55,6 +57,7 @@ export const getPosts = async (req, res, next) => {
   }
 };
 
+// 새로운 post 등록
 export const postPost = async (req, res, next) => {
   try {
     let variable = req.body;
@@ -65,6 +68,22 @@ export const postPost = async (req, res, next) => {
 
     // 응답
     return res.status(200);
+  } catch(error) {
+    next(error);
+  }
+};
+
+// Post(챌린지) 정보 반환
+export const getPost = async (req, res, next) => {
+  try {
+    const {query: postId} = req;
+    if (!mongoose.isValidObjectId(postId)) {
+      return res.status(400).send({ err: 'Invalid Post ID' });
+    };
+
+    const post = await Post.findById(postId);
+
+    return res.status(200).send(post);
   } catch(error) {
     next(error);
   }
