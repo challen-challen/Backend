@@ -1,4 +1,5 @@
 import "./db";
+import "./passport";
 import mongoose from "mongoose";
 import express from "express";
 import morgan from "morgan";
@@ -16,6 +17,7 @@ const app = express();
 
 dotenv.config();
 
+app.use("/uploads", express.static("uploads"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(

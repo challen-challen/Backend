@@ -23,7 +23,7 @@ const postSchema = new mongoose.Schema(
     },
 
     // 첨부파일(챌린지 인증 사진)
-    fileUrl: String,
+    fileUrl: Array,
 
     // 글 제목
     title: {

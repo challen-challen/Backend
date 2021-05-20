@@ -1,8 +1,7 @@
 import NaverStrategy from "passport-naver";
 import { naverLoginCallback } from "./controllers/globalController";
 import User from "./model/User";
-
-const passport = require("passport");
+import passport from "passport";
 
 // naver
 passport.use(

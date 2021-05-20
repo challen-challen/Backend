@@ -1,4 +1,5 @@
 import passport from "passport";
+import User from "../model/User";
 
 export const naverLoginCallback = async (
   accessToken,
@@ -8,7 +9,7 @@ export const naverLoginCallback = async (
 ) => {
   const {
     id,
-    _json: { email },
+    _json: { email, nickname },
   } = profile;
 
   try {
@@ -22,6 +23,7 @@ export const naverLoginCallback = async (
     } else {
       const newUser = await User.create({
         naverId: id,
+        nickname,
         email,
       });
 

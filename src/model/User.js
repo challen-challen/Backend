@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema(
     // passport google id
     googleId: Number,
     // passport naver id
-    naverId: Number,
+    naverId: String,
     // passport githubId id
     githubId: Number,
     // passport kakaoId id
