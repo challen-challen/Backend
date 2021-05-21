@@ -59,43 +59,44 @@ export const getPosts = async (req, res, next) => {
   }
 };
 
-// export const postPost = async (req, res, next) => {
-//   try {
-//     const {
-//       body: { category },
-//       files,
-//     } = req;
+export const postPost = async (req, res, next) => {
+  try {
+    const {
+      body: { category },
+      files,
+    } = req;
 
-//     let variable = req.body;
-//     variable.writer = req.user;
+    console.log(req.user);
+    let variable = req.body;
+    variable.writer = req.user;
 
-//     // db query
-//     let post = new Post(variable);
+    // db query
+    let post = new Post(variable);
 
-//     // 파일 이미지 작업
-//     if (files) {
-//       files.forEach((file) => post.fileUrl.push(file.path));
-//     }
+    // 파일 이미지 작업
+    if (files) {
+      files.forEach((file) => post.fileUrl.push(file.path));
+    }
 
-//     [post] = await Promise.all([
-//       post.save(),
-//       User.updateOne(
-//         { "_id ": req.user._id },
-//         {
-//           $push: { post: post._id },
-//           $push: { latestPost: post, $slice: -1 },
-//           $inc: {
-//             allScore: { dailyScore: 10, monthlyScore: 10, sumScore: 10 },
-//             // 카테고리별 점수 구현
-//             //categoryScore: { "[category]": 1 },
-//           },
-//         }
-//       ),
-//     ]);
+    [post] = await Promise.all([
+      post.save(),
+      User.updateOne(
+        { "_id ": req.user._id },
+        {
+          $push: { post: post._id },
+          $push: { latestPost: post, $slice: -1 },
+          $inc: {
+            allScore: { dailyScore: 10, monthlyScore: 10, sumScore: 10 },
+            // 카테고리별 점수 구현
+            //categoryScore: { "[category]": 1 },
+          },
+        }
+      ),
+    ]);
 
-//     // 응답
-//     return res.status(200).json({ success: true, post });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
+    // 응답
+    return res.status(200).json({ success: true, post });
+  } catch (error) {
+    next(error);
+  }
+};
