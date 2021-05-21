@@ -1,6 +1,7 @@
 import Post from "../model/Post";
 //import User from "../model/User";
 
+// main 페이지의 오늘 참여자 수, 총 챌린지 개수, 오늘 챌린지 개수 현황을 반환
 export const getMain = async (req, res, next) => {
   try {
     // db query
@@ -31,6 +32,7 @@ export const getMain = async (req, res, next) => {
   }
 };
 
+// post 목록 반환
 export const getPosts = async (req, res, next) => {
   try {
     const {
