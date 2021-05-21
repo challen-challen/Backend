@@ -81,7 +81,6 @@ export const getPost = async (req, res, next) => {
   }
 };
 
-// post 등록
 export const postPost = async (req, res, next) => {
   try {
     const {
@@ -108,8 +107,47 @@ export const postPost = async (req, res, next) => {
       files.forEach((file) => post.fileUrl.push(file.path));
     }
 
+    // 게시물 개수
+    const postSize = req.user.post.length;
+
+    // 게시물 개수에 따른 필터링
+    switch (postSize) {
+      case 0:
+        // 뱃지 이미지 삽입
+        req.user.badgeUrl.push(
+          "https://onetube.s3.ap-northeast-2.amazonaws.com/avatar/KakaoTalk_20210521_162810177.png"
+        );
+        break;
+      case 4:
+        req.user.badgeUrl.push(
+          "https://onetube.s3.ap-northeast-2.amazonaws.com/avatar/KakaoTalk_20210521_173524813.png"
+        );
+        break;
+      case 9:
+        req.user.badgeUrl.push(
+          "https://onetube.s3.ap-northeast-2.amazonaws.com/avatar/KakaoTalk_20210521_173605779.png"
+        );
+        break;
+      case 14:
+        req.user.badgeUrl.push(
+          "https://onetube.s3.ap-northeast-2.amazonaws.com/avatar/KakaoTalk_20210521_173608749.png"
+        );
+        break;
+      case 19:
+        req.user.badgeUrl.push(
+          "https://onetube.s3.ap-northeast-2.amazonaws.com/avatar/KakaoTalk_20210521_173613323.png"
+        );
+        break;
+      case 29:
+        req.user.badgeUrl.push(
+          "https://onetube.s3.ap-northeast-2.amazonaws.com/avatar/KakaoTalk_20210521_173636470.png"
+        );
+        break;
+    }
+
     const [updatePost, user] = await Promise.all([
       post.save(),
+      req.user.save(),
       User.findOneAndUpdate(
         { _id: req.user._id },
         {
@@ -118,7 +156,8 @@ export const postPost = async (req, res, next) => {
             latestPost: { $each: [post], $slice: -1 },
           },
           $inc: cateFilter,
-        }
+        },
+        { new: true }
       ),
     ]);
 
@@ -129,6 +168,7 @@ export const postPost = async (req, res, next) => {
   }
 };
 
+// facker용 postPost controller
 // export const postPost = async (req, res, next) => {
 //   try {
 //     const {
@@ -152,9 +192,47 @@ export const postPost = async (req, res, next) => {
 //     if (files) {
 //       files.forEach((file) => post.fileUrl.push(file.path));
 //     }
+//     const user = await User.findById(writer._id);
+//     const postSize = user.post.length;
 
-//     const [updatePost, user] = await Promise.all([
+//     // 게시물 개수에 따른 필터링
+//     switch (postSize) {
+//       case 1:
+//         // 뱃지 이미지 삽입
+//         user.badgeUrl.push(
+//           "https://onetube.s3.ap-northeast-2.amazonaws.com/avatar/KakaoTalk_20210521_162810177.png"
+//         );
+//         break;
+//       case 5:
+//         user.badgeUrl.push(
+//           "https://onetube.s3.ap-northeast-2.amazonaws.com/avatar/KakaoTalk_20210521_173524813.png"
+//         );
+//         break;
+//       case 10:
+//         user.badgeUrl.push(
+//           "https://onetube.s3.ap-northeast-2.amazonaws.com/avatar/KakaoTalk_20210521_173605779.png"
+//         );
+//         break;
+//       case 15:
+//         user.badgeUrl.push(
+//           "https://onetube.s3.ap-northeast-2.amazonaws.com/avatar/KakaoTalk_20210521_173608749.png"
+//         );
+//         break;
+//       case 20:
+//         user.badgeUrl.push(
+//           "https://onetube.s3.ap-northeast-2.amazonaws.com/avatar/KakaoTalk_20210521_173613323.png"
+//         );
+//         break;
+//       case 30:
+//         user.badgeUrl.push(
+//           "https://onetube.s3.ap-northeast-2.amazonaws.com/avatar/KakaoTalk_20210521_173636470.png"
+//         );
+//         break;
+//     }
+
+//     const [updatePost, users] = await Promise.all([
 //       post.save(),
+//       user.save(),
 //       User.findOneAndUpdate(
 //         { _id: writer._id },
 //         {
@@ -168,7 +246,7 @@ export const postPost = async (req, res, next) => {
 //     ]);
 
 //     // 응답
-//     return res.status(200).json({ success: true, updatePost, user });
+//     return res.status(200).json({ success: true, updatePost, users });
 //   } catch (error) {
 //     next(error);
 //   }
