@@ -1,6 +1,18 @@
 import passport from "passport";
 import User from "../model/User";
 
+export const getSetUser = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id);
+    res.status(200).json({
+      suceess: true,
+      user,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const logout = async (req, res, next) => {
   try {
     req.logout();
