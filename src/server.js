@@ -13,6 +13,7 @@ import mongoStore from "connect-mongo";
 import postRouter from "./routers/postRouter";
 import rankingRouter from "./routers/rankingRouter";
 import userRouter from "./routers/userRouter";
+import likeRouter from "./routers/likeRouter";
 import globalRouter from "./routers/globalRouter";
 
 const app = express();
@@ -66,6 +67,7 @@ app.get("/post", (req, res) => {
 app.use(routes.challen, postRouter);
 app.use(routes.rank, rankingRouter);
 app.use(routes.user, userRouter);
+app.use(routes.like, likeRouter);
 app.use(routes.home, globalRouter);
 
 app.use((err, req, res, next) => {
