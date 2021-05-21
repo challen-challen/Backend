@@ -1,5 +1,6 @@
 import Post from "../model/Post";
 import User from "../model/User";
+import mongoose from "mongoose";
 
 // main 페이지의 오늘 참여자 수, 총 챌린지 개수, 오늘 챌린지 개수 현황을 반환
 export const getMain = async (req, res, next) => {
@@ -60,6 +61,23 @@ export const getPosts = async (req, res, next) => {
     next(error);
   }
 };
+
+// Post(챌린지) 정보 반환
+export const getPost = async (req, res, next) => {
+  try {
+    const {params : {postId}} = req;
+    console.log(postId);
+    if (!mongoose.isValidObjectId(postId)) {
+      return res.status(400).send({ err: 'Invalid Post ID' });
+    };
+
+    const post = await Post.findById(postId);
+
+    return res.status(200).send(post);
+  } catch(error) {
+    next(error);
+  }
+}; 
 
 // post 등록
 export const postPost = async (req, res, next) => {

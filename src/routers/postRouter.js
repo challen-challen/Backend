@@ -1,5 +1,5 @@
 import express from "express";
-import { getMain, getPosts, postPost } from "../controllers/postController";
+import { getMain, getPosts, getPost, postPost } from "../controllers/postController";
 import routes from "../routes";
 import { multerImage } from "../middlewares";
 
@@ -9,6 +9,8 @@ const postRouter = express.Router();
 postRouter.get("/", getMain);
 // 챌린지 페이지 get
 postRouter.get(routes.posts, getPosts);
+// 챌린지 get
+postRouter.get(routes.post, getPost);
 // 챌린지 업로드
 postRouter.post(routes.posts, multerImage.array("images", 4), postPost);
 
