@@ -5,6 +5,9 @@ const HOME = "/api";
 const NAVER = "/naver";
 const NAVER_CALLBACK = "/naver/callback";
 
+// setUser
+const SET_USER = "/setUser";
+
 // logout
 const LOGOUT = "/logout";
 
@@ -20,7 +23,7 @@ const RANK = "/api/ranking";
 
 // mypage
 const USER = "/api/mypage";
-const USER_POSTS = "/posts/:userId";
+const USER_POSTS = "/posts";
 
 // 공통
 const USER_ID = "/:userId";
@@ -37,6 +40,7 @@ const routes = {
   naver: NAVER,
   naverCallback: NAVER_CALLBACK,
   logout: LOGOUT,
+  setUser: SET_USER,
 };
 
 export default routes;
