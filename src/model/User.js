@@ -12,7 +12,6 @@ const userSchema = new mongoose.Schema(
     // 닉네임
     nickname: {
       type: String,
-      unique: 1,
       required: true,
     },
     // passport google id
@@ -33,7 +32,7 @@ const userSchema = new mongoose.Schema(
     ],
 
     // 유저가 올린 최신 글
-    //latestPost: [postSchema],
+    latestPost: [postSchema],
 
     // 유저가 좋아요 누른 글
     likePost: [

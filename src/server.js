@@ -37,7 +37,7 @@ app.use(passport.session());
 app.get("/post", (req, res) => {
   const html = `
   <form action=/api/challen${routes.posts} method="post" >
-    <p><input type="text" name="categoty" placeholder="categoty" /></p>  
+    <p><input type="text" name="category" placeholder="category" /></p>  
     <p><input type="text" name="title" placeholder="title" /></p>        
     <p><input type="text" name="plan" placeholder="plan" /></p>   
     <p><input type="text" name="content" placeholder="content" /></p>   

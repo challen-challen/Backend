@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const postSchema = new mongoose.Schema(
+export const postSchema = new mongoose.Schema(
   {
     // 작성자
     writer: {
@@ -11,13 +11,12 @@ const postSchema = new mongoose.Schema(
       },
       nickname: {
         type: String,
-        unique: 1,
         required: true,
       },
     },
 
-    // categoty 전기 부문, 교통 부문, 냉난방 부문, 자원 부문으로 구별하는 기능을 한다
-    categoty: {
+    // category 전기 부문, 교통 부문, 냉난방 부문, 자원 부문으로 구별하는 기능을 한다
+    category: {
       type: String,
       required: true,
     },
