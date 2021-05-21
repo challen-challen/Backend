@@ -1,11 +1,15 @@
 import passport from "passport";
 import express from "express";
 import routes from "../routes";
-import { naverLogin, postNaverLogin } from "../controllers/globalController";
+import {
+  naverLogin,
+  postNaverLogin,
+  logout,
+} from "../controllers/globalController";
 
 const globalRouter = express.Router();
 
-// 메인 페이지 get
+// naver
 globalRouter.get(routes.naver, naverLogin);
 globalRouter.get(
   routes.naverCallback,
@@ -14,5 +18,8 @@ globalRouter.get(
   }),
   postNaverLogin
 );
+
+// logout
+globalRouter.get(routes.logout, logout);
 
 export default globalRouter;

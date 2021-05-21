@@ -5,6 +5,9 @@ const HOME = "/api";
 const NAVER = "/naver";
 const NAVER_CALLBACK = "/naver/callback";
 
+// logout
+const LOGOUT = "/logout";
+
 // main
 const CHALLEN = "/api/challen";
 
@@ -31,6 +34,7 @@ const routes = {
   userPosts: USER_POSTS,
   naver: NAVER,
   naverCallback: NAVER_CALLBACK,
+  logout: LOGOUT,
 };
 
 export default routes;

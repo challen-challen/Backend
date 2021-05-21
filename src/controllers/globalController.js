@@ -1,6 +1,17 @@
 import passport from "passport";
 import User from "../model/User";
 
+export const logout = async (req, res, next) => {
+  try {
+    req.logout();
+    return res.status(200).json({
+      suceess: true,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const naverLoginCallback = async (
   accessToken,
   refreshToken,
