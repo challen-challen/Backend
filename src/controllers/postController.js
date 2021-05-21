@@ -37,7 +37,7 @@ export const getMain = async (req, res, next) => {
 export const getPosts = async (req, res, next) => {
   try {
     const {
-      query: { category, sort },
+      query: { category, sort, skip },
     } = req;
     if (!category || !sort) {
       return res.status(400).send({ err: "category or sort is not exist." });
@@ -48,15 +48,26 @@ export const getPosts = async (req, res, next) => {
       filter["category"] = category;
     }
 
+    let posts;
     // 정렬
     if (sort === "likes") {
-      var posts = await Post.find(filter).sort({ likeCount: 1 });
+      posts = await Post.find(filter)
+        .sort({ likeCount: 1 })
+        .skip(skip * 8)
+        .limit(8);
     } else {
-      var posts = await Post.find(filter).sort({ createAt: -1 });
+      posts = await Post.find(filter)
+        .sort({ createAt: -1 })
+        .skip(skip * 8)
+        .limit(8);
     }
 
+    let isRemain = false;
+    if (posts.length === 8) {
+      isRemain = true;
+    }
     // 응답
-    return res.status(200).json({ posts });
+    return res.status(200).json({ success: true, posts, isRemain });
   } catch (error) {
     next(error);
   }

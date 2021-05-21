@@ -32,6 +32,10 @@ const LIKE = "/api/like";
 // 공통
 const USER_ID = "/:userId";
 
+// comment
+const COMMENT = "/api/comments";
+const COMMENT_ID = "/:commentId";
+
 const routes = {
   home: HOME,
   challen: CHALLEN,
@@ -47,6 +51,8 @@ const routes = {
   setUser: SET_USER,
   postUpload: POST_UPLOAD,
   like: LIKE,
+  comment: COMMENT,
+  commentId: COMMENT_ID,
 };
 
 export default routes;

@@ -15,6 +15,7 @@ import rankingRouter from "./routers/rankingRouter";
 import userRouter from "./routers/userRouter";
 import likeRouter from "./routers/likeRouter";
 import globalRouter from "./routers/globalRouter";
+import commentRouter from "./routers/commentRouter";
 
 const app = express();
 
@@ -66,7 +67,19 @@ app.get("/post", (req, res) => {
 app.get("/likeposttest", (req, res) => {
   const html = `
   <form action=${routes.like} method="post"  enctype="application/x-www-form-urlencoded">
-    <p><input type="text" name="postId" placeholder="postId" /></p>  
+    <p><input type="text" name="postId" placeholder="postId" /></p> 
+    <button>Send my greetings</button>
+  </form>
+  `;
+  res.send(html);
+});
+
+app.get("/comment", (req, res) => {
+  const html = `
+  <form action="/api/comments" method="post">
+    <p><input type="text" name="content" placeholder="content" /></p>  
+    <p><input type="text" name="postId" placeholder="postId" /></p>        
+      
     <button>Send my greetings</button>
   </form>
   `;
@@ -79,6 +92,7 @@ app.use(routes.rank, rankingRouter);
 app.use(routes.user, userRouter);
 app.use(routes.like, likeRouter);
 app.use(routes.home, globalRouter);
+app.use(routes.comment, commentRouter);
 
 app.use((err, req, res, next) => {
   console.log(err);
