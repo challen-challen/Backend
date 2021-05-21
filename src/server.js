@@ -1,5 +1,6 @@
 import "./db";
 import "./passport";
+import "./initService";
 import { generateFakeData } from "./faker";
 import cors from "cors";
 import express from "express";
