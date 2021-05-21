@@ -42,16 +42,16 @@ export const getPosts = async (req, res, next) => {
       return res.status(400).send({ err: "category or sort is not exist." });
     }
     // 카테고리 별
-    let filters = {};
+    let filter = {};
     if (category !== "all") {
-      filters["category"] == category;
+      filter["category"] = category;
     }
 
     // 정렬
     if (sort === "likes") {
-      let posts = await Post.find(filter).sort({ likeCount: 1 });
+      var posts = await Post.find(filter).sort({ likeCount: 1 });
     } else {
-      let posts = await Post.find(filter).sort({ createAt: -1 });
+      var posts = await Post.find(filter).sort({ createAt: -1 });
     }
 
     // 응답
