@@ -1,5 +1,14 @@
+import mongoose from "mongoose";
+import { postSchema } from "./Post";
+
 const userSchema = new mongoose.Schema(
   {
+    // 이메일
+    email: {
+      type: String,
+      required: true,
+    },
+
     // 닉네임
     nickname: {
       type: String,
@@ -9,7 +18,7 @@ const userSchema = new mongoose.Schema(
     // passport google id
     googleId: Number,
     // passport naver id
-    naverId: Number,
+    naverId: String,
     // passport githubId id
     githubId: Number,
     // passport kakaoId id
@@ -22,6 +31,22 @@ const userSchema = new mongoose.Schema(
         ref: "Post",
       },
     ],
+
+    // 유저가 올린 최신 글
+    //latestPost: [postSchema],
+
+    // 유저가 좋아요 누른 글
+    likePost: [
+      {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: "Like",
+      },
+    ],
+
+    // 뱃지 이미지
+    badgeUrl: {
+      type: Array,
+    },
 
     // 전체 랭킹을 위한 점수
     // 📌 mongodb expire time(조사)

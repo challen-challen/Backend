@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { commentSchema } from "../model/Comments";
 
 const postSchema = new mongoose.Schema(
   {
@@ -8,7 +7,7 @@ const postSchema = new mongoose.Schema(
       _id: {
         type: mongoose.SchemaTypes.ObjectId,
         required: true,
-        ref: user,
+        ref: "User",
       },
       nickname: {
         type: String,
@@ -24,7 +23,7 @@ const postSchema = new mongoose.Schema(
     },
 
     // 첨부파일(챌린지 인증 사진)
-    fileUrl: String,
+    fileUrl: Array,
 
     // 글 제목
     title: {
@@ -52,15 +51,13 @@ const postSchema = new mongoose.Schema(
       default: Date.now,
     },
 
-    // 해당 게시글의 댓글 정보
-    comments: [commentSchema],
-
-    // 좋아요 개수
-    likeCount: {
-      type: Number,
-      default: 0,
-      required: true,
-    },
+    // 유저가 좋아요한 게시글들
+    likes: [
+      {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: "Like",
+      },
+    ],
   },
   { timestamps: true }
 );
