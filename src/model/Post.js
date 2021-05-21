@@ -50,13 +50,11 @@ export const postSchema = new mongoose.Schema(
       default: Date.now,
     },
 
-    // 유저가 좋아요한 게시글들
-    likes: [
-      {
-        type: mongoose.SchemaTypes.ObjectId,
-        ref: "Like",
-      },
-    ],
+    // 좋아요 수
+    likeNum: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
