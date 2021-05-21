@@ -26,6 +26,9 @@ const RANK = "/api/ranking";
 const USER = "/api/mypage";
 const USER_POSTS = "/posts";
 
+// like
+const LIKE = "/api/like";
+
 // 공통
 const USER_ID = "/:userId";
 
@@ -47,6 +50,7 @@ const routes = {
   logout: LOGOUT,
   setUser: SET_USER,
   postUpload: POST_UPLOAD,
+  like: LIKE,
   comment: COMMENT,
   commentId: COMMENT_ID,
 };
