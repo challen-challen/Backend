@@ -63,6 +63,16 @@ app.get("/post", (req, res) => {
   res.send(html);
 });
 
+app.get("/likeposttest", (req, res) => {
+  const html = `
+  <form action=${routes.like} method="post"  enctype="application/x-www-form-urlencoded">
+    <p><input type="text" name="postId" placeholder="postId" /></p>  
+    <button>Send my greetings</button>
+  </form>
+  `;
+  res.send(html);
+});
+
 // router
 app.use(routes.challen, postRouter);
 app.use(routes.rank, rankingRouter);
