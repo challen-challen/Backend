@@ -1,5 +1,6 @@
 import Post from "../model/Post";
 import User from "../model/User";
+import mongoose from "mongoose";
 
 // main 페이지의 오늘 참여자 수, 총 챌린지 개수, 오늘 챌린지 개수 현황을 반환
 export const getMain = async (req, res, next) => {
@@ -13,13 +14,13 @@ export const getMain = async (req, res, next) => {
       },
     }).countDocuments();
 
-    const sumUserNum = await Post.find({
+    let sumUserNum = await Post.find({
       createAt: {
         $gte: new Date(new Date().setHours(0, 0, 0, 0)),
         $lte: new Date(new Date().setHours(23, 59, 59, 999)),
       },
-      distinct: writer,
-    }).countDocuments();
+    }).distinct("writer");
+    sumUserNum = sumUserNum.length;
 
     // 응답
     return res.status(200).json({
@@ -42,16 +43,16 @@ export const getPosts = async (req, res, next) => {
       return res.status(400).send({ err: "category or sort is not exist." });
     }
     // 카테고리 별
-    let filters = {};
+    let filter = {};
     if (category !== "all") {
-      filters["category"] == category;
+      filter["category"] = category;
     }
 
     // 정렬
     if (sort === "likes") {
-      let posts = await Post.find(filter).sort({ likeCount: 1 });
+      var posts = await Post.find(filter).sort({ likeCount: 1 });
     } else {
-      let posts = await Post.find(filter).sort({ createAt: -1 });
+      var posts = await Post.find(filter).sort({ createAt: -1 });
     }
 
     // 응답
@@ -60,6 +61,23 @@ export const getPosts = async (req, res, next) => {
     next(error);
   }
 };
+
+// Post(챌린지) 정보 반환
+export const getPost = async (req, res, next) => {
+  try {
+    const {params : {postId}} = req;
+    console.log(postId);
+    if (!mongoose.isValidObjectId(postId)) {
+      return res.status(400).send({ err: 'Invalid Post ID' });
+    };
+
+    const post = await Post.findById(postId);
+
+    return res.status(200).send(post);
+  } catch(error) {
+    next(error);
+  }
+}; 
 
 // post 등록
 export const postPost = async (req, res, next) => {
