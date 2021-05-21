@@ -89,7 +89,6 @@ export const postPost = async (req, res, next) => {
 
     let variable = req.body;
     variable.writer = req.user;
-    console.log(variable);
 
     // db query
     let post = new Post(variable);
