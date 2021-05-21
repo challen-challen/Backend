@@ -1,6 +1,6 @@
 import "./db";
 import "./passport";
-import mongoose from "mongoose";
+import { generateFakeData } from "./faker";
 import express from "express";
 import morgan from "morgan";
 import dotenv from "dotenv";
@@ -29,6 +29,13 @@ app.use(
   })
 );
 app.use(morgan("dev"));
+
+//faker
+
+// const generateFake = async () => {
+//   await generateFakeData(50, 10);
+// };
+// generateFake();
 
 // passport
 app.use(passport.initialize());

@@ -3,14 +3,10 @@ import User from "../model/User";
 
 export const getMypage = async (req, res, next) => {
   try {
-    const {
-      params: { userId },
-    } = req;
+    if (!mongoose.isValidObjectId(req.user._id))
+      return res.status(400).send({ err: "userId doesn't exist" });
 
-    if (!mongoose.isValidObjectId(userId))
-      return res.status(400).send({ err: "userId is invalid" });
-
-    const user = await User.findById(userId);
+    const user = await User.findById(req.user._id);
     if (!user) return res.status(400).send({ err: "user is not exist" });
 
     // 게시물 개수
@@ -27,7 +23,6 @@ export const getMypage = async (req, res, next) => {
     //   case 20:
     //   case 30:
     // }
-
     await user.save();
     return res.status(200).json({ success: true, user });
   } catch (error) {
@@ -37,11 +32,11 @@ export const getMypage = async (req, res, next) => {
 
 export const getUserPosts = async (req, res, next) => {
   try {
-    const {
-      params: { userId },
-    } = req;
-
-    const userPosts = await User.findById(userId).populate("post");
+    if (!req.user._id)
+      return res.status(400).send({ err: "userId doesn't exist" });
+    console.log(req.user._id);
+    const userPosts = await User.findById(req.user._id).populate("post");
+    return res.status(200).json({ success: true, userPosts });
   } catch (error) {
     next(error);
   }

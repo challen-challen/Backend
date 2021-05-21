@@ -65,19 +65,21 @@ export const getPosts = async (req, res, next) => {
 // Post(챌린지) 정보 반환
 export const getPost = async (req, res, next) => {
   try {
-    const {params : {postId}} = req;
+    const {
+      params: { postId },
+    } = req;
     console.log(postId);
     if (!mongoose.isValidObjectId(postId)) {
-      return res.status(400).send({ err: 'Invalid Post ID' });
-    };
+      return res.status(400).send({ err: "Invalid Post ID" });
+    }
 
     const post = await Post.findById(postId);
 
     return res.status(200).send(post);
-  } catch(error) {
+  } catch (error) {
     next(error);
   }
-}; 
+};
 
 // post 등록
 export const postPost = async (req, res, next) => {
@@ -126,3 +128,48 @@ export const postPost = async (req, res, next) => {
     next(error);
   }
 };
+
+// export const postPost = async (req, res, next) => {
+//   try {
+//     const {
+//       body: { category, writer },
+//       files,
+//     } = req;
+
+//     let variable = req.body;
+
+//     // db query
+//     let post = new Post(variable);
+//     let cateFilter = {};
+//     cateFilter["allScore.dailyScore"] = 10;
+//     cateFilter["allScore.monthlyScore"] = 10;
+//     cateFilter["allScore.sumScore"] = 10;
+//     cateFilter[`categoryScore.${category}.dailyScore`] = 10;
+//     cateFilter[`categoryScore.${category}.monthlyScore`] = 10;
+//     cateFilter[`categoryScore.${category}.sumScore`] = 10;
+
+//     // 파일 이미지 작업
+//     if (files) {
+//       files.forEach((file) => post.fileUrl.push(file.path));
+//     }
+
+//     const [updatePost, user] = await Promise.all([
+//       post.save(),
+//       User.findOneAndUpdate(
+//         { _id: writer._id },
+//         {
+//           $push: {
+//             post: post._id,
+//             latestPost: { $each: [post], $slice: -1 },
+//           },
+//           $inc: cateFilter,
+//         }
+//       ),
+//     ]);
+
+//     // 응답
+//     return res.status(200).json({ success: true, updatePost, user });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
