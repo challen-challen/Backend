@@ -17,6 +17,7 @@ const CHALLEN = "/api/challen";
 // post
 const POSTS = "/posts";
 const POST = "/post/:postId";
+const POST_UPLOAD = "/upload";
 
 // ranking
 const RANK = "/api/ranking";
@@ -41,6 +42,7 @@ const routes = {
   naverCallback: NAVER_CALLBACK,
   logout: LOGOUT,
   setUser: SET_USER,
+  postUpload: POST_UPLOAD,
 };
 
 export default routes;

@@ -1,5 +1,11 @@
 import express from "express";
-import { getMain, getPosts, getPost, postPost } from "../controllers/postController";
+import {
+  getMain,
+  getPosts,
+  getPost,
+  postPost,
+  postUpload,
+} from "../controllers/postController";
 import routes from "../routes";
 import { multerImage } from "../middlewares";
 
@@ -13,5 +19,7 @@ postRouter.get(routes.posts, getPosts);
 postRouter.get(routes.post, getPost);
 // 챌린지 업로드
 postRouter.post(routes.posts, multerImage.array("images", 4), postPost);
+
+postRouter.post(routes.postUpload, multerImage.array("images", 4), postUpload);
 
 export default postRouter;
