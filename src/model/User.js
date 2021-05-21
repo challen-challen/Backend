@@ -47,6 +47,14 @@ const userSchema = new mongoose.Schema(
       type: Array,
     },
 
+    // 유저가 남긴 댓글들
+    comments: [
+      {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: "Comment",
+      },
+    ],
+
     // 전체 랭킹을 위한 점수
     // 📌 mongodb expire time(조사)
     allScore: {

@@ -29,6 +29,10 @@ const USER_POSTS = "/posts";
 // 공통
 const USER_ID = "/:userId";
 
+// comment
+const COMMENT = "/api/comments";
+const COMMENT_ID = "/:commentId";
+
 const routes = {
   home: HOME,
   challen: CHALLEN,
@@ -43,6 +47,8 @@ const routes = {
   logout: LOGOUT,
   setUser: SET_USER,
   postUpload: POST_UPLOAD,
+  comment: COMMENT,
+  commentId: COMMENT_ID,
 };
 
 export default routes;

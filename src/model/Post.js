@@ -57,6 +57,14 @@ export const postSchema = new mongoose.Schema(
         ref: "Like",
       },
     ],
+
+    // 게시글에 달린 댓글
+    comments: [
+      {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: "Comment",
+      },
+    ],
   },
   { timestamps: true }
 );
