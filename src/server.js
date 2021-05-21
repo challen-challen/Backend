@@ -1,6 +1,7 @@
 import "./db";
 import "./passport";
 import { generateFakeData } from "./faker";
+import cors from "cors";
 import express from "express";
 import morgan from "morgan";
 import dotenv from "dotenv";
@@ -17,6 +18,11 @@ const app = express();
 
 dotenv.config();
 
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true,
+};
+app.use(cors(corsOptions));
 app.use("/uploads", express.static("uploads"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
