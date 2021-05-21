@@ -1,5 +1,5 @@
 import Post from "../model/Post";
-//import User from "../model/User";
+import User from "../model/User";
 
 // main 페이지의 오늘 참여자 수, 총 챌린지 개수, 오늘 챌린지 개수 현황을 반환
 export const getMain = async (req, res, next) => {
@@ -61,43 +61,49 @@ export const getPosts = async (req, res, next) => {
   }
 };
 
-// export const postPost = async (req, res, next) => {
-//   try {
-//     const {
-//       body: { category },
-//       files,
-//     } = req;
+// post 등록
+export const postPost = async (req, res, next) => {
+  try {
+    const {
+      body: { category },
+      files,
+    } = req;
 
-//     let variable = req.body;
-//     variable.writer = req.user;
+    let variable = req.body;
+    variable.writer = req.user;
 
-//     // db query
-//     let post = new Post(variable);
+    // 파일 이미지 작업
+    if (files) {
+      files.forEach((file) => post.fileUrl.push(file.path));
+    }
 
-//     // 파일 이미지 작업
-//     if (files) {
-//       files.forEach((file) => post.fileUrl.push(file.path));
-//     }
+    // db query
+    let post = new Post(variable);
+    let cateFilter = {};
+    cateFilter["allScore.dailyScore"] = 10;
+    cateFilter["allScore.monthlyScore"] = 10;
+    cateFilter["allScore.sumScore"] = 10;
+    cateFilter[`categoryScore.${category}.dailyScore`] = 10;
+    cateFilter[`categoryScore.${category}.monthlyScore`] = 10;
+    cateFilter[`categoryScore.${category}.sumScore`] = 10;
 
-//     [post] = await Promise.all([
-//       post.save(),
-//       User.updateOne(
-//         { "_id ": req.user._id },
-//         {
-//           $push: { post: post._id },
-//           $push: { latestPost: post, $slice: -1 },
-//           $inc: {
-//             allScore: { dailyScore: 10, monthlyScore: 10, sumScore: 10 },
-//             // 카테고리별 점수 구현
-//             //categoryScore: { "[category]": 1 },
-//           },
-//         }
-//       ),
-//     ]);
+    const [updatePost, user] = await Promise.all([
+      post.save(),
+      User.findOneAndUpdate(
+        {_id : req.user._id},
+        {
+          $push: { 
+            post: post._id, 
+            latestPost: {$each: [post], $slice: -1}
+        },
+          $inc : cateFilter
+        }
+      )
+    ]);
 
-//     // 응답
-//     return res.status(200).json({ success: true, post });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
+    // 응답
+    return res.status(200).json({ success: true, updatePost, user });
+  } catch (error) {
+    next(error);
+  }
+};

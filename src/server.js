@@ -34,6 +34,19 @@ app.use(morgan("dev"));
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.get("/post", (req, res) => {
+  const html = `
+  <form action=/api/challen${routes.posts} method="post" >
+    <p><input type="text" name="category" placeholder="category" /></p>  
+    <p><input type="text" name="title" placeholder="title" /></p>        
+    <p><input type="text" name="plan" placeholder="plan" /></p>   
+    <p><input type="text" name="content" placeholder="content" /></p>   
+    <button>Send my greetings</button>
+  </form>
+  `;
+  res.send(html);
+});
+
 // router
 app.use(routes.challen, postRouter);
 app.use(routes.rank, rankingRouter);

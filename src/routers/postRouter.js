@@ -1,5 +1,5 @@
 import express from "express";
-import { getMain, getPosts } from "../controllers/postController";
+import { getMain, getPosts, postPost } from "../controllers/postController";
 import routes from "../routes";
 import { multerImage } from "../middlewares";
 
