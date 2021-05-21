@@ -167,6 +167,18 @@ export const postPost = async (req, res, next) => {
   }
 };
 
+export const postUpload = async (req, res, next) => {
+  try {
+    const { files } = req;
+
+    if (!files) return res.status(400).send({ err: "file is not exist" });
+
+    return res.status(200).json(files.path);
+  } catch (error) {
+    next(error);
+  }
+};
+
 // facker용 postPost controller
 // export const postPost = async (req, res, next) => {
 //   try {

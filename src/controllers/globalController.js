@@ -3,6 +3,7 @@ import User from "../model/User";
 
 export const getSetUser = async (req, res, next) => {
   try {
+    console.log(req.user);
     const user = await User.findById(req.user._id);
     res.status(200).json({
       suceess: true,

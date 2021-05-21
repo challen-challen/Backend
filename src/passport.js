@@ -17,11 +17,13 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
+  console.log("serializeUser");
   // req.login()에서 넘겨준 user값
   done(null, user.email); // user에서 email만 세션에 저장
 });
 
 passport.deserializeUser(async (email, done) => {
+  console.log("deserializeUser");
   const user = await User.findOne({ email });
   done(null, user);
 });
