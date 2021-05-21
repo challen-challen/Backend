@@ -13,13 +13,13 @@ export const getMain = async (req, res, next) => {
       },
     }).countDocuments();
 
-    const sumUserNum = await Post.find({
+    let sumUserNum = await Post.find({
       createAt: {
         $gte: new Date(new Date().setHours(0, 0, 0, 0)),
         $lte: new Date(new Date().setHours(23, 59, 59, 999)),
       },
-      distinct: writer,
-    }).countDocuments();
+    }).distinct("writer");
+    sumUserNum = sumUserNum.length;
 
     // 응답
     return res.status(200).json({
