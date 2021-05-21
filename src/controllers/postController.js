@@ -89,11 +89,7 @@ export const postPost = async (req, res, next) => {
 
     let variable = req.body;
     variable.writer = req.user;
-
-    // 파일 이미지 작업
-    if (files) {
-      files.forEach((file) => post.fileUrl.push(file.path));
-    }
+    console.log(variable);
 
     // db query
     let post = new Post(variable);
@@ -105,18 +101,23 @@ export const postPost = async (req, res, next) => {
     cateFilter[`categoryScore.${category}.monthlyScore`] = 10;
     cateFilter[`categoryScore.${category}.sumScore`] = 10;
 
+    // 파일 이미지 작업
+    if (files) {
+      files.forEach((file) => post.fileUrl.push(file.path));
+    }
+
     const [updatePost, user] = await Promise.all([
       post.save(),
       User.findOneAndUpdate(
-        {_id : req.user._id},
+        { _id: req.user._id },
         {
-          $push: { 
-            post: post._id, 
-            latestPost: {$each: [post], $slice: -1}
-        },
-          $inc : cateFilter
+          $push: {
+            post: post._id,
+            latestPost: { $each: [post], $slice: -1 },
+          },
+          $inc: cateFilter,
         }
-      )
+      ),
     ]);
 
     // 응답
