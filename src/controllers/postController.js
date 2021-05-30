@@ -96,7 +96,6 @@ export const postPost = async (req, res, next) => {
   try {
     const {
       body: { category },
-      files,
     } = req;
 
     let variable = req.body;
@@ -111,11 +110,6 @@ export const postPost = async (req, res, next) => {
     cateFilter[`categoryScore.${category}.dailyScore`] = 10;
     cateFilter[`categoryScore.${category}.monthlyScore`] = 10;
     cateFilter[`categoryScore.${category}.sumScore`] = 10;
-
-    // 파일 이미지 작업
-    if (files) {
-      files.forEach((file) => post.fileUrl.push(file.path));
-    }
 
     // 게시물 개수
     const postSize = req.user.post.length;
