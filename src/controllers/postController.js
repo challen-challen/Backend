@@ -84,7 +84,7 @@ export const getPost = async (req, res, next) => {
       return res.status(400).send({ err: "Invalid Post ID" });
     }
 
-    const post = await Post.findById(postId);
+    const post = await Post.findById(postId).populate("comments");
 
     return res.status(200).send(post);
   } catch (error) {

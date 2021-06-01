@@ -55,12 +55,12 @@ export const postSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    
+
     // 게시글에 달린 댓글
     comments: [
       {
         type: mongoose.SchemaTypes.ObjectId,
-        ref: "Comment",
+        ref: "comment",
       },
     ],
   },
