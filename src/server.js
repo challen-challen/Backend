@@ -11,6 +11,7 @@ import session from "express-session";
 import passport from "passport";
 import mongoStore from "connect-mongo";
 import postRouter from "./routers/postRouter";
+import calculatorRouter from "./routers/calculatorRouter";
 import rankingRouter from "./routers/rankingRouter";
 import userRouter from "./routers/userRouter";
 import likeRouter from "./routers/likeRouter";
@@ -87,6 +88,7 @@ app.get("/comment", (req, res) => {
 
 // router
 app.use(routes.challen, postRouter);
+app.use(routes.home, calculatorRouter);
 app.use(routes.rank, rankingRouter);
 app.use(routes.user, userRouter);
 app.use(routes.like, likeRouter);
