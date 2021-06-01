@@ -24,7 +24,6 @@ export const getReducedCarbon = async (req, res, next) => {
             carbon *= sparedTime;
         }
         
-        console.log(carbon)
         return res.status(200).json({ 
             success: true, 
             reducedCarcon : carbon 
