@@ -18,6 +18,7 @@ const CHALLEN = "/api/challen";
 const POSTS = "/posts";
 const POST = "/post/:postId";
 const POST_UPLOAD = "/upload";
+const CALCULATOR = "/calculator";
 
 // ranking
 const RANK = "/api/ranking";
@@ -41,6 +42,7 @@ const routes = {
   challen: CHALLEN,
   posts: POSTS,
   post: POST,
+  calculator: CALCULATOR,
   rank: RANK,
   userId: USER_ID,
   user: USER,
