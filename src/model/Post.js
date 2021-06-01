@@ -37,6 +37,12 @@ export const postSchema = new mongoose.Schema(
       required: true,
     },
 
+    // 탄소저감량
+    reducedCarbon: {
+      type: Number,
+      required: false,
+    },
+
     // 글 내용
     content: {
       type: String,
