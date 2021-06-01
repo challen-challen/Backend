@@ -117,14 +117,13 @@ export const postPost = async (req, res, next) => {
     // 게시물 개수에 따른 필터링
     switch (postSize) {
       case 0:
-        // 뱃지 이미지 삽입
         req.user.badgeUrl.push(
-          "https://onetube.s3.ap-northeast-2.amazonaws.com/avatar/KakaoTalk_20210521_162810177.png"
+          "https://onetube.s3.ap-northeast-2.amazonaws.com/avatar/KakaoTalk_20210521_173524813.png"
         );
         break;
       case 4:
         req.user.badgeUrl.push(
-          "https://onetube.s3.ap-northeast-2.amazonaws.com/avatar/KakaoTalk_20210521_173524813.png"
+          "https://onetube.s3.ap-northeast-2.amazonaws.com/avatar/KakaoTalk_20210521_162810177.png"
         );
         break;
       case 9:
