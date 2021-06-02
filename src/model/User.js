@@ -55,6 +55,18 @@ const userSchema = new mongoose.Schema(
       },
     ],
 
+    // 탄소 저감량
+    reducedCarbon: {
+      dailyAmount: {
+        type: Number,
+        default: 0,
+      },
+      allAmount: {
+        type: Number,
+        default: 0,
+      }
+    },
+
     // 전체 랭킹을 위한 점수
     // 📌 mongodb expire time(조사)
     allScore: {

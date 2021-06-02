@@ -58,6 +58,7 @@ app.get("/post", (req, res) => {
     <p><input type="text" name="title" placeholder="title" /></p>        
     <p><input type="text" name="plan" placeholder="plan" /></p>   
     <p><input type="text" name="content" placeholder="content" /></p>   
+    <p><input type="text" name="reducedCarbon" placeholder="reducedCarbon" /></p>
     <button>Send my greetings</button>
   </form>
   `;

@@ -7,10 +7,14 @@ cron.schedule('0 0 0 * * *', () => {
   User.updateMany(
     {},
     {
+      // 점수
       "allScore.dailyScore": 0,
       "categoryScore.electricity.dailyScore": 0,
       "categoryScore.airCondition.dailyScore": 0,
       "categoryScore.resource.dailyScore": 0,
+
+      // 탄소저감량
+      "reducedCarbon.dailyAmount": 0,
    },
   ).then( r => {
     console.log("Daily initialize Success");
