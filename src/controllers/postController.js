@@ -92,24 +92,18 @@ export const getPost = async (req, res, next) => {
   }
 };
 
+// Post(챌린지) 업로드
 export const postPost = async (req, res, next) => {
   try {
     const {
-      body: { category },
+      body: { category, reducedCarbon },
     } = req;
 
     let variable = req.body;
     variable.writer = req.user;
-
-    // db query
-    let post = new Post(variable);
-    let cateFilter = {};
-    cateFilter["allScore.dailyScore"] = 10;
-    cateFilter["allScore.monthlyScore"] = 10;
-    cateFilter["allScore.sumScore"] = 10;
-    cateFilter[`categoryScore.${category}.dailyScore`] = 10;
-    cateFilter[`categoryScore.${category}.monthlyScore`] = 10;
-    cateFilter[`categoryScore.${category}.sumScore`] = 10;
+    if (variable["plan"] == "etc") {
+      variable["plan"] = req.body.etcPlan;
+    }
 
     // 게시물 개수
     const postSize = req.user.post.length;
@@ -148,6 +142,22 @@ export const postPost = async (req, res, next) => {
         break;
     }
 
+    // 점수 증가 필터
+    let userIncFilter = {};
+    userIncFilter["allScore.dailyScore"] = 10;
+    userIncFilter["allScore.monthlyScore"] = 10;
+    userIncFilter["allScore.sumScore"] = 10;
+    userIncFilter[`categoryScore.${category}.dailyScore`] = 10;
+    userIncFilter[`categoryScore.${category}.monthlyScore`] = 10;
+    userIncFilter[`categoryScore.${category}.sumScore`] = 10;
+    
+    // 탄소 저감량 필터
+    if (reducedCarbon != "") {
+      userIncFilter["reducedCarbon.dailyAmount"] = reducedCarbon;
+      userIncFilter["reducedCarbon.allAmount"] = reducedCarbon;
+    }
+
+    let post = new Post(variable);
     const [updatePost, user] = await Promise.all([
       post.save(),
       req.user.save(),
@@ -158,7 +168,7 @@ export const postPost = async (req, res, next) => {
             post: post._id,
             latestPost: { $each: [post], $slice: -1 },
           },
-          $inc: cateFilter,
+          $inc: userIncFilter,
         },
         { new: true }
       ),
