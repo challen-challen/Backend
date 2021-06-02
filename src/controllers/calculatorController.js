@@ -49,7 +49,7 @@ const getCarbonAmount = async (category, plan) => {
         }, 
         "traffic": {
             "bicycle": 482692,
-            "publicTransportation": 9026923,
+            "publicTransport": 9026923,
         },
         "electricity": {
             "tv": 936,
