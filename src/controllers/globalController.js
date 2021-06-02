@@ -61,9 +61,17 @@ export const naverLoginCallback = async (
 
 export const naverLogin = passport.authenticate("naver", {
   // 로그인 페이지로 redirect
-  failureRedirect: process.env.CLIENT_HOME_URL,
+
+  failureRedirect:
+    process.env.NODE_ENV == "dev"
+      ? process.env.CLIENT_HOME_URL_DEV
+      : process.env.CLIENT_HOME_URL_PRO,
 });
 
 export const postNaverLogin = async (req, res) => {
-  res.redirect(process.env.CLIENT_HOME_URL);
+  res.redirect(
+    process.env.NODE_ENV == "dev"
+      ? process.env.CLIENT_HOME_URL_DEV
+      : process.env.CLIENT_HOME_URL_PRO
+  );
 };

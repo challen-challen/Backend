@@ -1,7 +1,7 @@
 import "./db";
 import "./passport";
 import "./initService";
-import { generateFakeData } from "./faker";
+import bodyParser from "body-parser";
 import cors from "cors";
 import express from "express";
 import morgan from "morgan";
@@ -23,11 +23,13 @@ const app = express();
 dotenv.config();
 
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: ["http://localhost:3000", "https://challechallen.com"],
   credentials: true,
 };
 app.use(cors(corsOptions));
 app.use("/uploads", express.static("uploads"));
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(
@@ -35,10 +37,29 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     resave: true,
     saveUninitialized: false,
+    cookie: {
+      // javascript로 변경하지 못하게
+      httpOnly: true,
+      secure: false,
+      domain: process.env.NODE_ENV === "production" && ".challenchallen.com",
+    },
     store: mongoStore.create({ mongoUrl: process.env.DB_HOST }),
   })
 );
-app.use(morgan("dev"));
+
+if (process.env.NODE_ENV === "production") {
+  app.use(morgan("combined"));
+
+  // 보안 관련 패키지
+  app.use(hpp());
+  app.use(
+    helmet({
+      contentSecurityPolicy: false,
+    })
+  );
+} else {
+  app.use(morgan("dev"));
+}
 
 //faker
 
