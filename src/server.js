@@ -3,6 +3,7 @@ import "./passport";
 import "./initService";
 import bodyParser from "body-parser";
 import hpp from "hpp";
+import helmet from "helmet";
 import cors from "cors";
 import express from "express";
 import morgan from "morgan";
