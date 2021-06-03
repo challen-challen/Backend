@@ -25,7 +25,7 @@ const app = express();
 dotenv.config();
 
 const corsOptions = {
-  origin: ["http://localhost:3000", "https://challechallen.com"],
+  origin: ["http://localhost:3000", "https://www.challenchallen.com"],
   credentials: true,
 };
 app.use(cors(corsOptions));
