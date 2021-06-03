@@ -97,12 +97,18 @@ export const postPost = async (req, res, next) => {
   try {
     const {
       body: { category, reducedCarbon },
+      files,
     } = req;
 
     let variable = req.body;
     variable.writer = req.user;
     if (variable["plan"] == "etc") {
       variable["plan"] = req.body.etcPlan;
+    }
+
+    // 파일 이미지 작업
+    if (files) {
+      files.forEach((file) => post.fileUrl.push(file.path));
     }
 
     // 게시물 개수
@@ -150,7 +156,7 @@ export const postPost = async (req, res, next) => {
     userIncFilter[`categoryScore.${category}.dailyScore`] = 10;
     userIncFilter[`categoryScore.${category}.monthlyScore`] = 10;
     userIncFilter[`categoryScore.${category}.sumScore`] = 10;
-    
+
     // 탄소 저감량 필터
     if (reducedCarbon != "") {
       userIncFilter["reducedCarbon.dailyAmount"] = reducedCarbon;
