@@ -111,6 +111,17 @@ app.get("/comment", (req, res) => {
   res.send(html);
 });
 
+app.get("/challenuploads", (req, res) => {
+  const html = `
+  <form action="/api/challen/upload" method="post" enctype="multipart/form-data">
+    파일명 : <input type="file" name="images">
+    파일명 : <input type="file" name="images">
+    <button type="submit">제출하기</button>
+  </form>
+  `;
+  res.send(html);
+});
+
 // router
 app.use(routes.challen, postRouter);
 app.use(routes.home, calculatorRouter);
