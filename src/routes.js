@@ -5,6 +5,10 @@ const HOME = "/api";
 const NAVER = "/naver";
 const NAVER_CALLBACK = "/naver/callback";
 
+// kakao
+const KAKAO = "/kakao";
+const KAKAO_CALLBACK = "/kakao/callback";
+
 // setUser
 const SET_USER = "/setUser";
 
@@ -55,6 +59,8 @@ const routes = {
   like: LIKE,
   comment: COMMENT,
   commentId: COMMENT_ID,
+  kakao: KAKAO,
+  kakaoCallback: KAKAO_CALLBACK,
 };
 
 export default routes;

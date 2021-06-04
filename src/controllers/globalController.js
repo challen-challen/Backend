@@ -25,6 +25,7 @@ export const logout = async (req, res, next) => {
   }
 };
 
+// naver
 export const naverLoginCallback = async (
   accessToken,
   refreshToken,
@@ -69,6 +70,67 @@ export const naverLogin = passport.authenticate("naver", {
 });
 
 export const postNaverLogin = async (req, res) => {
+  res.redirect(
+    process.env.NODE_ENV == "dev"
+      ? process.env.CLIENT_HOME_URL_DEV
+      : process.env.CLIENT_HOME_URL_PRO
+  );
+};
+
+// kakao
+
+export const kakaoLoginCallback = async (
+  accessToken,
+  refreshToken,
+  profile,
+  done
+) => {
+  const {
+    _json: { id },
+    _json: {
+      kakao_account: { email },
+      kakao_account: {
+        profile: { nickname },
+      },
+    },
+  } = profile;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (user) {
+      user.kakaoId = id;
+      await user.save();
+
+      return done(null, user);
+    } else {
+      const newUser = await User.create({
+        kakaoId: id,
+        nickname,
+        email,
+      });
+
+      return done(null, newUser);
+    }
+  } catch (error) {
+    console.log("error", error);
+    return done(error);
+  }
+};
+
+export const KakaoLogin = (req, res) => {
+  res.redirect(
+    `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${
+      process.env.KAKAO_CLIENT_ID
+    }&redirect_uri=${
+      process.env.NODE_ENV === "production"
+        ? process.env.KAKAO_CALLBACK_URL_PRO
+        : process.env.KAKAO_CALLBACK_URL_DEV
+    }&prompt=login`
+  );
+};
+
+export const postKakaoLogin = (req, res) => {
   res.redirect(
     process.env.NODE_ENV == "dev"
       ? process.env.CLIENT_HOME_URL_DEV
