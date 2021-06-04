@@ -52,8 +52,8 @@ export const getPosts = async (req, res, next) => {
     // 정렬
     if (sort === "likes") {
       posts = await Post.find(filter)
-        .sort({ likeCount: 1 })
         .skip(skip * 8)
+        .sort({ likeNum: -1 })
         .limit(8);
     } else {
       posts = await Post.find(filter)
