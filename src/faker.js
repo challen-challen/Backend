@@ -36,6 +36,8 @@ export const generateFakeData = async (userCount, blogsPerUser) => {
             plan: faker.lorem.paragraphs(),
             category: "electricity",
             writer: user,
+            fileUrl:
+              "https://onetube.s3.ap-northeast-2.amazonaws.com/avatar/garbage-2729608_1920.jpg",
           })
         );
       }

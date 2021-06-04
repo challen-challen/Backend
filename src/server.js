@@ -1,6 +1,8 @@
 import "./db";
 import "./passport";
 import "./initService";
+import { generateFakeData } from "./faker";
+
 import bodyParser from "body-parser";
 import hpp from "hpp";
 import helmet from "helmet";
@@ -48,6 +50,7 @@ app.use(
     store: mongoStore.create({ mongoUrl: process.env.DB_HOST }),
   })
 );
+app.set("trust proxy", 1);
 
 if (process.env.NODE_ENV === "production") {
   app.use(morgan("combined"));
@@ -66,7 +69,7 @@ if (process.env.NODE_ENV === "production") {
 //faker
 
 // const generateFake = async () => {
-//   await generateFakeData(50, 10);
+//   await generateFakeData(100, 5);
 // };
 // generateFake();
 
