@@ -25,7 +25,7 @@ const app = express();
 dotenv.config();
 
 const corsOptions = {
-  origin: ["http://localhost:3000", "https://challechallen.com"],
+  origin: ["http://localhost:3000", "https://www.challenchallen.com"],
   credentials: true,
 };
 app.use(cors(corsOptions));
@@ -106,6 +106,17 @@ app.get("/comment", (req, res) => {
     <p><input type="text" name="postId" placeholder="postId" /></p>        
       
     <button>Send my greetings</button>
+  </form>
+  `;
+  res.send(html);
+});
+
+app.get("/challenuploads", (req, res) => {
+  const html = `
+  <form action="/api/challen/upload" method="post" enctype="multipart/form-data">
+    파일명 : <input type="file" name="images">
+    파일명 : <input type="file" name="images">
+    <button type="submit">제출하기</button>
   </form>
   `;
   res.send(html);

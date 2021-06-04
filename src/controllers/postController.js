@@ -187,7 +187,11 @@ export const postUpload = async (req, res, next) => {
 
     if (!files) return res.status(400).send({ err: "file is not exist" });
 
-    return res.status(200).json(files.path);
+    let filepaths = [];
+    for ( let f in files) {
+      filepaths.push(files[f].path);
+    }
+    return res.status(200).json(filepaths);
   } catch (error) {
     next(error);
   }
