@@ -34,34 +34,34 @@ export const getReducedCarbon = async (req, res, next) => {
 }
 
 // getCarbonAmount 는 실천 방안 별 탄소 저감량을 반환하는 함수다.
-const getCarbonAmount = async (category, plan) => {
-    // 실천 방안 별 탄소 저감량(mg)
+export const getCarbonAmount = async (category, plan) => {
+    // 실천 방안 별 탄소 저감량(g)
     // electricity, airCondition 은 1분당 저감량
     // traffic, resource는 건당 저감량
     const carbonObj = {
         "resource": {
-            "hanky": 28767,
-            "tumbler": 9589,
-            "basket": 6849,
-            "recycle": 241096,
-            "water": 13151   
+            "hanky": 29,
+            "tumbler": 10,
+            "basket": 7,
+            "recycle": 241,
+            "water": 13   
         }, 
         "traffic": {
-            "bicycle": 482692,
-            "publicTransport": 9026923,
+            "bicycle": 482,
+            "publicTransport": 9546,
         },
         "electricity": {
-            "tv": 936,
-            "washer": 1787,
-            "computer": 1839,
-            "cooker": 1127,
-            "microwave": 7353
+            "tv": 1,
+            "washer": 2,
+            "computer": 2,
+            "cooker": 1,
+            "microwave": 7
         },
         "airCondition": {
-            "aircon": 12422,
-            "fan": 362,
-            "boiler": 54811,
-            "electricBlanket": 1155
+            "aircon": 12,
+            "fan": 0.4,
+            "boiler": 55,
+            "electricBlanket": 1
         }
     }
     return carbonObj[category][plan];
